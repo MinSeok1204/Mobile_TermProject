@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">termProject</string>
+
+    <string name="category_prompt">게시판 선택</string>
+    <string-array name="category_array">
+        <item>자유 게시판</item>
+    </string-array>
+</resources>
