@@ -6,6 +6,7 @@ import static androidx.recyclerview.widget.LinearLayoutManager.*;
 
 import android.content.ClipData;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
@@ -64,7 +65,6 @@ public class WriteActivity extends AppCompatActivity {
         newDb = handler.getWritableDatabase();
 
         // 뷰 객체 호출
-
         contentArea = findViewById(R.id.contentArea);
         titleArea   = findViewById(R.id.titleArea);
         sendBtn     = findViewById(R.id.sendBtn);
@@ -72,9 +72,17 @@ public class WriteActivity extends AppCompatActivity {
         uploadBtn   = findViewById(R.id.uploadBtn);
         recyclerView = findViewById(R.id.recyclerview);
 
+        //이전 인텐트에서 유저아이디 가져옴
+        //없으면 권한이 없다고 알리고 해당 인텐트 종료
+        Intent intent = getIntent();
+        _uid = intent.getIntExtra("_id",-1);
+        _auth = intent.getIntExtra("_auth",0);
+        Log.e("_uid",Integer.toString(_uid));
+
+        //카테고리
         ArrayList<String> spinnerArray = new ArrayList<String>();
         spinnerArray.add("자유게시판");
-        //if(_auth == 0)
+        if(_auth == 2022)
             spinnerArray.add("공지 사항");
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, spinnerArray);
@@ -93,21 +101,20 @@ public class WriteActivity extends AppCompatActivity {
                     type = "community";
             }
         });
-        //이전 인텐트에서 유저아이디 가져옴
-        //없으면 권한이 없다고 알리고 해당 인텐트 종료
-        Intent intent = getIntent();
-        _uid = intent.getIntExtra("_id",-1);
-        Log.e("_uid",Integer.toString(_uid));
-        if(_uid == -1){
-            Toast.makeText(this,"해당 권한이 없습니다!", LENGTH_SHORT).show();
-            finish();
-        }
+
 
         //버튼 이벤트 할당
         sendBtn.setOnClickListener(e->{
-            write(titleArea.getText().toString(),contentArea.getText().toString(),_uid,type);
+            if(_uid == -1 || _uid == 0){
+                Toast.makeText(this,"해당 권한이 없습니다!", LENGTH_SHORT).show();
+                finish();
+            } else {
+                write(newDb, titleArea.getText().toString(),contentArea.getText().toString(),_uid,type);
+                getCurrentId(newDb,type);
+            }
         });
 
+        //여러장의 이미지 업로드 처리
         uploadBtn.setOnClickListener(e->{
             Intent imageIntent = new Intent(Intent.ACTION_PICK);
             imageIntent.setType(MediaStore.Images.Media.CONTENT_TYPE);
@@ -163,24 +170,37 @@ public class WriteActivity extends AppCompatActivity {
         }
     }
 
-    private void write(String title, String content, int _uid, String table){
+    private void write(SQLiteDatabase db, String title, String content, int _uid, String table){
         long CurrentTime = System.currentTimeMillis();
         Date TodayDate = new Date(CurrentTime);
         SimpleDateFormat SDFormat = new SimpleDateFormat("yy-MM-dd");
         String today = SDFormat.format(TodayDate);
+        int _id = getCurrentId(db,table);
 
         //db에 삽입
         if(!title.equals("") && !content.equals("")){
-            newDb.beginTransaction();
+            db.beginTransaction();
             try {
+                getCurrentId(db,type);
                 String query = String.format("INSERT INTO " + table + " (_uid,title,content,postdate) VALUES ('%d', %s, %s, '%s')",
                         _uid,DatabaseUtils.sqlEscapeString(title),DatabaseUtils.sqlEscapeString(content),today);
-                newDb.execSQL(query);
-                newDb.setTransactionSuccessful();
+                db.execSQL(query);
+
+                if(!uriList.isEmpty()){
+                    for(int i=0; i<uriList.size(); i++){
+                        Log.e("Uri",uriList.get(i).toString());
+                        String imgQuery = String.format("INSERT INTO " + table + "_img (post_id,uri) VALUES('%d', %s)", _id, DatabaseUtils.sqlEscapeString(uriList.get(i).toString()));
+                        db.execSQL(imgQuery);
+                    }
+
+                }
+
+                db.setTransactionSuccessful();
             } catch (Exception e){
                 e.printStackTrace();
             } finally {
-                newDb.endTransaction();
+                db.endTransaction();
+
                 Log.e("유저아이디",Integer.toString(_uid));
                 Log.e("게시시간",today);
                 Log.e("제목: ", title);
@@ -190,5 +210,14 @@ public class WriteActivity extends AppCompatActivity {
             }
         }else
             Toast.makeText(this,"내용을 입력해 주세요", LENGTH_SHORT).show();
+    }
+
+    private int getCurrentId(SQLiteDatabase db, String table){
+        String query = "SELECT _id FROM " + table + ";";
+        Cursor c = db.rawQuery(query, null);
+        c.moveToNext();
+
+        Log.e("_id : ", Integer.toString(c.getCount()));
+        return c.getCount()+1;
     }
  }
