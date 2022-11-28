@@ -2,60 +2,68 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:layout_margin="5dp"
-    android:background="#AAAAAA">
+    android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#6200ED"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="관리자 로그인"
+            android:textColor="#FFFFFF"
             android:textSize="25dp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginTop="10dp"
-        android:background="#FFFFFF">
+        android:background="#FFFFFF"
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/passwordArea"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:hint="비밀번호"/>
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:hint="비밀번호"
+            android:inputType="textPassword" />
+
         <CheckBox
             android:id="@+id/keepAdminCheck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="관리자 유지"/>
+            android:text="관리자 유지" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="#FFFFFF">
+        android:background="#FFFFFF"
+        android:orientation="horizontal">
+
         <Button
             android:id="@+id/confirmBtn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_margin="10dp"
-            android:text="확인"/>
+            android:layout_weight="1"
+            android:text="확인" />
+
         <Button
             android:id="@+id/cancelBtn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
             android:layout_margin="10dp"
-            android:text="취소"/>
+            android:layout_weight="1"
+            android:text="취소" />
     </LinearLayout>
 
 </LinearLayout>

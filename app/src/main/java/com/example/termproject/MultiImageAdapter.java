@@ -20,10 +20,12 @@ import java.util.ArrayList;
 public class MultiImageAdapter extends RecyclerView.Adapter<MultiImageAdapter.ViewHolder>{
     private ArrayList<Uri> mData = null;
     private Context mContext = null;
+    private int from_activity;
 
-    public MultiImageAdapter(ArrayList<Uri> uriList, Context applicationContext) {
+    public MultiImageAdapter(ArrayList<Uri> uriList, Context applicationContext, int from_activity) {
         mData = uriList;
         mContext = applicationContext;
+        this.from_activity = from_activity;
     }
 
 
@@ -34,13 +36,15 @@ public class MultiImageAdapter extends RecyclerView.Adapter<MultiImageAdapter.Vi
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imageview = itemView.findViewById(R.id.imageItem);
-
-            imageview.setOnClickListener(e->{
-                mData.remove(getAdapterPosition());
-
-                notifyItemRemoved(getAdapterPosition());
-                notifyItemRangeChanged(getAdapterPosition(),mData.size());
-            });
+            if(from_activity == 1) {
+                imageview.setOnClickListener(e -> {
+                    if(getAdapterPosition() != -1){
+                        mData.remove(getAdapterPosition());
+                        notifyItemRemoved(getAdapterPosition());
+                        notifyItemRangeChanged(getAdapterPosition(), mData.size());
+                    }
+                });
+            }
         }
     }
     @NonNull

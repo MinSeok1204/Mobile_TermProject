@@ -10,88 +10,101 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="공지사항"
+        android:background="#FFFFFF"
+        android:text="한밭대학교 정보통신공학과"
+        android:textAlignment="center"
+        android:textColor="#6200EC"
         android:textSize="20dp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_weight="0.7"></androidx.viewpager.widget.ViewPager>
 
     <LinearLayout
-        android:id="@+id/noticeField"
         android:layout_width="match_parent"
-        android:layout_height="199dp"
-        android:layout_margin="5dp"
-        android:layout_weight="0.3"
-        android:minHeight="200dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.6"
         android:orientation="vertical">
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"
-            android:background="#4A00FDDF"
-            android:padding="5dp"
-            android:text="공지사항 1"
-            android:textColor="@color/black" />
+            android:orientation="horizontal">
 
-    </LinearLayout>
+            <ImageButton
+                android:id="@+id/introduceBtn"
+                android:layout_width="180dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:backgroundTint="#6200ED"
+                android:scaleType="fitXY"
+                android:src="@drawable/introduce"
+                app:tint="@color/white" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_weight="0.1"
-        android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/gotoWebBtn"
+                android:layout_width="180dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:backgroundTint="#6200ED"
+                android:scaleType="fitXY"
+                android:src="@drawable/homepage"
+                app:tint="@color/white" />
+        </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/noticeBtn"
-            android:layout_width="0dp"
-            android:layout_height="87dp"
-            android:layout_weight="0.3"
-            android:backgroundTint="#4A00FDDF"
-            android:scaleType="fitCenter"
-            android:src="@drawable/notice"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/communityBtn"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/communityBtn"
-            android:layout_width="0dp"
-            android:layout_height="87dp"
-            android:layout_weight="0.3"
-            android:backgroundTint="#4A00FDDF"
-            android:scaleType="centerInside"
-            android:src="@drawable/lists"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/writeBtn"
-            app:layout_constraintStart_toEndOf="@+id/noticeBtn"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageButton
-            android:id="@+id/writeBtn"
-            android:layout_width="0dp"
-            android:layout_height="87dp"
-            android:layout_marginEnd="16dp"
-            android:layout_weight="0.3"
-            android:scaleType="centerInside"
-            android:src="@drawable/write"
-            android:backgroundTint="#4A00FDDF"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/communityBtn"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-    <LinearLayout
-        android:layout_margin="5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_weight="0.7">
-        <TextView
-            android:id="@+id/userid"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="unknown"/>
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/jobInfoBtn"
+                android:layout_width="180dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:backgroundTint="#6200ED"
+                android:scaleType="fitXY"
+                android:src="@drawable/jobinfo"
+                app:tint="@color/white" />
+
+            <ImageButton
+                android:id="@+id/communityBtn"
+                android:layout_width="180dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:backgroundTint="#6200ED"
+                android:scaleType="fitXY"
+                android:src="@drawable/community"
+                app:tint="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/deptNoticeBtn"
+                android:layout_width="180dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:backgroundTint="#6200ED"
+                android:scaleType="fitXY"
+                android:src="@drawable/deptnotice"
+                app:tint="@color/white" />
+
+            <ImageButton
+                android:id="@+id/howtocomeBtn"
+                android:layout_width="180dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:backgroundTint="#6200ED"
+                android:scaleType="fitXY"
+                android:src="@drawable/howtocome"
+                app:tint="@color/white" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -27,8 +27,9 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.util.LinkedList;
+
 public class MainActivity extends AppCompatActivity {
-    private SQL_member member;
     private SQLiteDatabase newDB;
     private sqlHandler sqlHandler;
 
@@ -37,12 +38,14 @@ public class MainActivity extends AppCompatActivity {
     private EditText passwordArea;
     private TextView registerArea;
 
-    private int      _id;
-
+    private int      _id;       //유저 아이디
+    private int      _auth;     //권한번호
+    private LinkedList<String>  titles;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
 
 
         //db 호출
@@ -88,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
     private  void login(SQLiteDatabase db, String username, String password) {
 
         //질의문, 커서 객체 선언
-        String query = "select _id from user where userid = '" + username + "'AND password = '" + password + "';";
+        String query = "select _id, _auth from user where userid = '" + username + "'AND password = '" + password + "';";
         Cursor c = db.rawQuery(query, null);
 
         Log.e("Total : ", Integer.toString(c.getCount()));
@@ -98,12 +101,14 @@ public class MainActivity extends AppCompatActivity {
 
             //_id값 추출
             _id = c.getInt(c.getColumnIndexOrThrow("_id"));
+            _auth = c.getInt(c.getColumnIndexOrThrow("_auth"));
             Log.e("_id : ", Integer.toString(_id));
             Toast.makeText(this,"로그인 성공",Toast.LENGTH_SHORT).show();
 
             //_id값 MainMenu 액티비티로 넘기기
             Intent  intent = new Intent(MainActivity.this,MainMenuActivity.class);
             intent.putExtra("_id",_id);
+            intent.putExtra("_auth",_auth);
             startActivity(intent);
         } else
             Toast.makeText(this,"로그인 실패",Toast.LENGTH_SHORT).show();

@@ -4,8 +4,8 @@
     android:layout_height="wrap_content">
     <ImageView
         android:id="@+id/imageItem"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:scaleType="center"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:scaleType="centerInside"
         android:layout_marginHorizontal="5dp"/>
 </LinearLayout>
